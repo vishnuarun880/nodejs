@@ -1,0 +1,17 @@
+name: Jenkins Pipeline Trigger
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch name as needed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Trigger Jenkins Pipeline
+      run: |
+        curl -X POST https://a04d-59-96-56-57.ngrok-free.app/github-webhook/ \
+          --user  Jenkins Admin:https://a04d-59-96-56-57.ngrok-free.app \
+          --data-urlencode "payload={\"ref\":\"${GITHUB_REF}\",\"repository\":{\"name\":\"${GITHUB_REPOSITORY}\"}}"
