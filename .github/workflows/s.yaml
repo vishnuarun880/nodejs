@@ -6,9 +6,9 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: jenkins/jenkins:latest
+    runs-on: ubuntu-latest
     steps:
-      - name: "Trigger jenkins job"
+      - name: "Trigger Jenkins job"
         uses: umutcolak/jenkins-trigger-job@main
         with:
           jenkins-url: ${{secrets.JENKINS_URL}}
