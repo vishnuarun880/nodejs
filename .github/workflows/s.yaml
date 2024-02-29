@@ -1,16 +1,18 @@
-name: Trigger Jenkins Build
+name: QA Automation
 on:
   push:
     branches:
-      - main
+      - 'master'
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build
+    runs-on: self-runner-node
     steps:
-      - name: Trigger Jenkins Build
-        env:
-          JENKINS_USERNAME: ${{ secrets.JENKINS_USERNAME }}
-          JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
-        run: |
-          curl -X POST https://ab1d-59-96-56-57.ngrok-free.app/job/node-j/build \
-          --user $JENKINS_USERNAME:$JENKINS_API_TOKEN
+      - name: "Trigger jenkins job"
+        uses: umutcolak/jenkins-trigger-job@main
+        with:
+          jenkins-url: ${{secrets.JENKINS_URL}}
+          user: ${{secrets.JENKINS_USERNAME}}
+          jenkins-token: ${{secrets.JENKINS_API_TOKEN}}
+          job-name: ${{secrets.JENKINS_JOB_NAME}}
+          job-params: '{"branch_name": "${{github.ref}}"}'
